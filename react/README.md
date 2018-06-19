@@ -197,16 +197,16 @@ This style guide is mostly based on the standards that are currently prevalent i
 
 ## Quotes
 
-  - Always use double quotes (`"`) for JSX attributes, but single quotes (`'`) for all other JS. eslint: [`jsx-quotes`](https://eslint.org/docs/rules/jsx-quotes)
+  - Always use single quotes (`'`) for JSX attributes, except when the attribute value contains a single quote already.
 
-    > Why? Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.
+    > Why? To keep quoting consistent across the codebase.
 
     ```jsx
     // bad
-    <Foo bar='bar' />
+    <Foo bar="bar" />
 
     // good
-    <Foo bar="bar" />
+    <Foo bar='bar' />
 
     // bad
     <Foo style={{ left: "20px" }} />
@@ -277,22 +277,6 @@ This style guide is mostly based on the standards that are currently prevalent i
 
     // good
     <Foo hidden />
-    ```
-
-  - Always include an `alt` prop on `<img>` tags. If the image is presentational, `alt` can be an empty string or the `<img>` must have `role="presentation"`. eslint: [`jsx-a11y/alt-text`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md)
-
-    ```jsx
-    // bad
-    <img src="hello.jpg" />
-
-    // good
-    <img src="hello.jpg" alt="Me waving hello" />
-
-    // good
-    <img src="hello.jpg" alt="" />
-
-    // good
-    <img src="hello.jpg" role="presentation" />
     ```
 
   - Do not use words like "image", "photo", or "picture" in `<img>` `alt` props. eslint: [`jsx-a11y/img-redundant-alt`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md)
@@ -524,7 +508,7 @@ This style guide is mostly based on the standards that are currently prevalent i
     }
     ```
 
-  - Bind event handlers for the render method in the constructor. eslint: [`react/jsx-no-bind`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md)
+  - Use arrow functions to bind event handlers instead of using 'bind' in the render function. eslint: [`react/jsx-no-bind`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md)
 
     > Why? A bind call in the render path creates a brand new function on every single render.
 
@@ -542,13 +526,7 @@ This style guide is mostly based on the standards that are currently prevalent i
 
     // good
     class extends React.Component {
-      constructor(props) {
-        super(props);
-
-        this.onClickDiv = this.onClickDiv.bind(this);
-      }
-
-      onClickDiv() {
+      onClickDiv = () => {
         // do stuff
       }
 
@@ -599,8 +577,7 @@ This style guide is mostly based on the standards that are currently prevalent i
 
   - Ordering for `class extends React.Component`:
 
-  1. optional `static` methods
-  1. `constructor`
+  1. optional `static` methods and properties (propTypes, defaultProps, childContextTypes)
   1. `getChildContext`
   1. `componentWillMount`
   1. `componentDidMount`
@@ -609,8 +586,9 @@ This style guide is mostly based on the standards that are currently prevalent i
   1. `componentWillUpdate`
   1. `componentDidUpdate`
   1. `componentWillUnmount`
-  1. *clickHandlers or eventHandlers* like `onClickSubmit()` or `onChangeDescription()`
+  1. *clickHandlers or eventHandlers* like `onClickSubmit()` or `handleChangeDescription()`
   1. *getter methods for `render`* like `getSelectReason()` or `getFooterContent()`
+  1. *everything else* any method or property that is not a getter, event handler, or render method
   1. *optional render methods* like `renderNavigation()` or `renderProfilePicture()`
   1. `render`
 
@@ -620,17 +598,15 @@ This style guide is mostly based on the standards that are currently prevalent i
     import React from 'react';
     import PropTypes from 'prop-types';
 
-    const propTypes = {
-      id: PropTypes.number.isRequired,
-      url: PropTypes.string.isRequired,
-      text: PropTypes.string,
-    };
-
-    const defaultProps = {
-      text: 'Hello World',
-    };
-
     class Link extends React.Component {
+      static propTypes = {
+        id: PropTypes.number.isRequired,
+        url: PropTypes.string.isRequired,
+        text: PropTypes.string
+      }
+      static defaultProps = {
+        text: 'Hello World'
+      }
       static methodsAreOk() {
         return true;
       }
@@ -640,35 +616,8 @@ This style guide is mostly based on the standards that are currently prevalent i
       }
     }
 
-    Link.propTypes = propTypes;
-    Link.defaultProps = defaultProps;
-
     export default Link;
     ```
-
-  - Ordering for `React.createClass`: eslint: [`react/sort-comp`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
-
-  1. `displayName`
-  1. `propTypes`
-  1. `contextTypes`
-  1. `childContextTypes`
-  1. `mixins`
-  1. `statics`
-  1. `defaultProps`
-  1. `getDefaultProps`
-  1. `getInitialState`
-  1. `getChildContext`
-  1. `componentWillMount`
-  1. `componentDidMount`
-  1. `componentWillReceiveProps`
-  1. `shouldComponentUpdate`
-  1. `componentWillUpdate`
-  1. `componentDidUpdate`
-  1. `componentWillUnmount`
-  1. *clickHandlers or eventHandlers* like `onClickSubmit()` or `onChangeDescription()`
-  1. *getter methods for `render`* like `getSelectReason()` or `getFooterContent()`
-  1. *optional render methods* like `renderNavigation()` or `renderProfilePicture()`
-  1. `render`
 
 ## `isMounted`
 

@@ -1,6 +1,6 @@
-# Airbnb JavaScript Style Guide() {
+# ToneDen JavaScript Style Guide() {
 
-*A mostly reasonable approach to JavaScript*
+*A semi-pro approach to JavaScript*
 
 > **Note**: this guide assumes you are using [Babel](https://babeljs.io), and requires that you use [babel-preset-airbnb](https://npmjs.com/babel-preset-airbnb) or the equivalent. It also assumes you are installing shims/polyfills in your app, with [airbnb-browser-shims](https://npmjs.com/airbnb-browser-shims) or the equivalent.
 
@@ -637,6 +637,7 @@ Other Style Guides
   - [7.1](#functions--declarations) Use named function expressions instead of function declarations. eslint: [`func-style`](https://eslint.org/docs/rules/func-style)
 
     > Why? Function declarations are hoisted, which means that it’s easy - too easy - to reference the function before it is defined in the file. This harms readability and maintainability. If you find that a function’s definition is large or complex enough that it is interfering with understanding the rest of the file, then perhaps it’s time to extract it to its own module! Don’t forget to explicitly name the expression, regardless of whether or not the name is inferred from the containing variable (which is often the case in modern browsers or when using compilers such as Babel). This eliminates any assumptions made about the Error's call stack. ([Discussion](https://github.com/airbnb/javascript/issues/794))
+    > ToneDen Edit: I find the code that comes from explicitly naming the expression to be ugly. Lets not enforce that.
 
     ```javascript
     // bad
@@ -644,14 +645,8 @@ Other Style Guides
       // ...
     }
 
-    // bad
-    const foo = function () {
-      // ...
-    };
-
     // good
-    // lexical name distinguished from the variable-referenced invocation(s)
-    const short = function longUniqueMoreDescriptiveLexicalFoo() {
+    const foo = function () {
       // ...
     };
     ```
@@ -810,51 +805,6 @@ Other Style Guides
     // good
     const x = function () {};
     const y = function a() {};
-    ```
-
-  <a name="functions--mutate-params"></a><a name="7.12"></a>
-  - [7.12](#functions--mutate-params) Never mutate parameters. eslint: [`no-param-reassign`](https://eslint.org/docs/rules/no-param-reassign.html)
-
-    > Why? Manipulating objects passed in as parameters can cause unwanted variable side effects in the original caller.
-
-    ```javascript
-    // bad
-    function f1(obj) {
-      obj.key = 1;
-    }
-
-    // good
-    function f2(obj) {
-      const key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1;
-    }
-    ```
-
-  <a name="functions--reassign-params"></a><a name="7.13"></a>
-  - [7.13](#functions--reassign-params) Never reassign parameters. eslint: [`no-param-reassign`](https://eslint.org/docs/rules/no-param-reassign.html)
-
-    > Why? Reassigning parameters can lead to unexpected behavior, especially when accessing the `arguments` object. It can also cause optimization issues, especially in V8.
-
-    ```javascript
-    // bad
-    function f1(a) {
-      a = 1;
-      // ...
-    }
-
-    function f2(a) {
-      if (!a) { a = 1; }
-      // ...
-    }
-
-    // good
-    function f3(a) {
-      const b = a || 1;
-      // ...
-    }
-
-    function f4(a = 1) {
-      // ...
-    }
     ```
 
   <a name="functions--spread-vs-apply"></a><a name="7.14"></a>
@@ -1540,16 +1490,6 @@ Other Style Guides
 
     const isJedi = getProp('jedi');
     ```
-  <a name="es2016-properties--exponentiation-operator"></a>
-  - [12.3](#es2016-properties--exponentiation-operator) Use exponentiation operator `**` when calculating exponentiations. eslint: [`no-restricted-properties`](https://eslint.org/docs/rules/no-restricted-properties).
-
-    ```javascript
-    // bad
-    const binary = Math.pow(2, 10);
-
-    // good
-    const binary = 2 ** 10;
-    ```
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2112,77 +2052,12 @@ Other Style Guides
     }
     ```
 
-  <a name="blocks--no-else-return"></a><a name="16.3"></a>
-  - [16.3](#blocks--no-else-return) If an `if` block always executes a `return` statement, the subsequent `else` block is unnecessary. A `return` in an `else if` block following an `if` block that contains a `return` can be separated into multiple `if` blocks. eslint: [`no-else-return`](https://eslint.org/docs/rules/no-else-return)
-
-    ```javascript
-    // bad
-    function foo() {
-      if (x) {
-        return x;
-      } else {
-        return y;
-      }
-    }
-
-    // bad
-    function cats() {
-      if (x) {
-        return x;
-      } else if (y) {
-        return y;
-      }
-    }
-
-    // bad
-    function dogs() {
-      if (x) {
-        return x;
-      } else {
-        if (y) {
-          return y;
-        }
-      }
-    }
-
-    // good
-    function foo() {
-      if (x) {
-        return x;
-      }
-
-      return y;
-    }
-
-    // good
-    function cats() {
-      if (x) {
-        return x;
-      }
-
-      if (y) {
-        return y;
-      }
-    }
-
-    // good
-    function dogs(x) {
-      if (x) {
-        if (z) {
-          return y;
-        }
-      } else {
-        return z;
-      }
-    }
-    ```
-
 **[⬆ back to top](#table-of-contents)**
 
 ## Control Statements
 
   <a name="control-statements"></a>
-  - [17.1](#control-statements) In case your control statement (`if`, `while` etc.) gets too long or exceeds the maximum line length, each (grouped) condition could be put into a new line. The logical operator should begin the line.
+  - [17.1](#control-statements) In case your control statement (`if`, `while` etc.) gets too long or exceeds the maximum line length, each (grouped) condition could be put into a new line. The logical operator should be at the end of the line.
 
     > Why? Requiring operators at the beginning of the line keeps the operators aligned and follows a pattern similar to method chaining. This also improves readability by making it easier to visually follow complex logic.
 
@@ -2206,14 +2081,6 @@ Other Style Guides
 
     // bad
     if (
-      foo === 123 &&
-      bar === 'abc'
-    ) {
-      thing1();
-    }
-
-    // good
-    if (
       foo === 123
       && bar === 'abc'
     ) {
@@ -2222,9 +2089,17 @@ Other Style Guides
 
     // good
     if (
-      (foo === 123 || bar === 'abc')
-      && doesItLookGoodWhenItBecomesThatLong()
-      && isThisReallyHappening()
+      foo === 123 &&
+      bar === 'abc'
+    ) {
+      thing1();
+    }
+
+    // good
+    if (
+      (foo === 123 || bar === 'abc') &&
+      doesItLookGoodWhenItBecomesThatLong() &&
+      isThisReallyHappening()
     ) {
       thing1();
     }
@@ -2394,12 +2269,12 @@ Other Style Guides
 ## Whitespace
 
   <a name="whitespace--spaces"></a><a name="18.1"></a>
-  - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 2 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html)
+  - [19.1](#whitespace--spaces) Use soft tabs (space character) set to 4 spaces. eslint: [`indent`](https://eslint.org/docs/rules/indent.html)
 
     ```javascript
     // bad
     function foo() {
-    ∙∙∙∙let name;
+    ∙∙let name;
     }
 
     // bad
@@ -2409,7 +2284,7 @@ Other Style Guides
 
     // good
     function baz() {
-    ∙∙let name;
+    ∙∙∙∙let name;
     }
     ```
 
@@ -2670,15 +2545,19 @@ Other Style Guides
     ```
 
   <a name="whitespace--in-brackets"></a><a name="18.10"></a>
-  - [19.10](#whitespace--in-brackets) Do not add spaces inside brackets. eslint: [`array-bracket-spacing`](https://eslint.org/docs/rules/array-bracket-spacing.html)
+  - [19.10](#whitespace--in-brackets) Do not add spaces inside brackets unless destructuring an array. eslint: [`array-bracket-spacing`](https://eslint.org/docs/rules/array-bracket-spacing.html)
 
     ```javascript
     // bad
     const foo = [ 1, 2, 3 ];
     console.log(foo[ 0 ]);
 
+    // bad
+    const [foo, bar] = [1, 2, 3];
+
     // good
     const foo = [1, 2, 3];
+    const [ bar, baz ] = [1, 2];
     console.log(foo[0]);
     ```
 
