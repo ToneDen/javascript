@@ -16,9 +16,6 @@ module.exports = {
     ],
     rules: {
         'array-callback-return': 2,
-        'arrow-parens': [1, 'as-needed', {
-            requireForBlockBody: true
-        }],
         'arrow-spacing': [2, {
             before: true,
             after: true
@@ -61,7 +58,9 @@ module.exports = {
                 }
             }
         }],
-        'newline-per-chained-call': 1,
+        /*'newline-per-chained-call': [1, {
+            ignoreChainWithDepth: 2
+        }],*/
         'no-array-constructor': 2,
         'no-case-declarations': 1,
         'no-console': 0,
@@ -78,7 +77,6 @@ module.exports = {
         'no-nested-ternary': 0,
         'no-new-func': 1,
         'no-new-wrappers': 1,
-        'no-plusplus': 1,
         'no-restricted-syntax': [
             1,
             {
@@ -98,14 +96,13 @@ module.exports = {
         'no-spaced-func': 1,
         'no-sparse-arrays': 0,
         'no-trailing-spaces': 1,
-        'no-underscore-dangle': 1,
         'no-unneeded-ternary': 1,
         'no-unused-vars': [1, {
             args: 'none'
         }],
         'no-useless-constructor': 1,
         'nonblock-statement-body-position': [1, 'beside'],
-        'object-shorthand': 1,
+        'object-shorthand': [1, 'properties'],
         'one-var': [1, 'never'],
         'operator-linebreak': [1, 'after', {
             overrides: {
