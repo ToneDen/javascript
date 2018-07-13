@@ -64,6 +64,7 @@ module.exports = {
         'no-array-constructor': 2,
         'no-case-declarations': 1,
         'no-console': 0,
+        'no-control-regex': 0,
         'no-dupe-class-members': 2,
         'no-duplicate-imports': 2,
         'no-eval': 2,
