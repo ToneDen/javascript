@@ -163,6 +163,6 @@ module.exports = {
         'space-before-function-paren': [1, 'never'],
         'space-in-parens': 1,
         'space-infix-ops': 1,
-        'template-curly-spacing': 1
+        'template-curly-spacing': 0
     }
 };
