@@ -1,6 +1,6 @@
 {
   "name": "toneden-javascript-style-guide",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A semi-pro approach to JavaScript.",
   "scripts": {
     "lint": "markdownlint --config linters/.markdownlint.json README.md */README.md",
