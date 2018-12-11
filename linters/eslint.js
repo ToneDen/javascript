@@ -152,7 +152,6 @@ module.exports = {
             order: [
                 'static-methods',
                 'lifecycle',
-                '/^(on|handle).+$/',
                 'everything-else',
                 '/^render.+$/',
                 'render'
