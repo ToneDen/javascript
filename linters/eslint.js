@@ -95,7 +95,6 @@ module.exports = {
         ],
         'no-spaced-func': 1,
         'no-sparse-arrays': 0,
-        'no-trailing-spaces': 1,
         'no-unneeded-ternary': 1,
         'no-unused-vars': [1, {
             args: 'none'
