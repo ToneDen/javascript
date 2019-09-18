@@ -158,7 +158,11 @@ module.exports = {
         }],
         semi: [2, 'always'],
         'space-before-blocks': 1,
-        'space-before-function-paren': [1, 'never'],
+        'space-before-function-paren': [1, {
+            anonymous: 'never',
+            name: 'never',
+            asyncArrow: 'always'
+        }],
         'space-in-parens': 1,
         'space-infix-ops': 1,
         'template-curly-spacing': 0
