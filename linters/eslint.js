@@ -160,7 +160,7 @@ module.exports = {
         'space-before-blocks': 1,
         'space-before-function-paren': [1, {
             anonymous: 'never',
-            name: 'never',
+            named: 'never',
             asyncArrow: 'always'
         }],
         'space-in-parens': 1,
