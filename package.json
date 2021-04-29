@@ -1,6 +1,6 @@
 {
   "name": "toneden-javascript-style-guide",
-  "version": "2.0.9",
+  "version": "2.1.0",
   "description": "A semi-pro approach to JavaScript.",
   "scripts": {
     "lint": "markdownlint --config linters/.markdownlint.json README.md */README.md",
@@ -30,9 +30,14 @@
     "markdownlint-cli": "^0.3.1"
   },
   "peerDependencies": {
-    "babel-eslint": ">= 8",
+    "@babel/eslint-parser": ">= 7",
     "eslint-plugin-import": ">= 2.12.0",
     "eslint-plugin-react": ">= 7.7.0",
     "eslint": ">= 4"
+  },
+  "dependencies": {
+    "eslint": "^7.25.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.23.2"
   }
 }
